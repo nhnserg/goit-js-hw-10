@@ -1,54 +1,51 @@
-import { fetchBreeds, fetchCatByBreeds } from './cat-api';
-import SlimSelect from 'slim-select';
+import { fetchBreeds, fetchCatByBreed } from './cat-api';
 
-const breedSelect = new SlimSelect({
-  select: '#breed-select',
+document.addEventListener('DOMContentLoaded', () => {
+  const breedSelect = document.querySelector('.breed-select');
+  const loader = document.querySelector('.loader');
+  const error = document.querySelector('.error');
+  const catInfo = document.querySelector('.cat-info');
+
+  // Fetch and populate breed options
+  fetchBreeds()
+    .then(breeds => {
+      breeds.forEach(breed => {
+        const option = document.createElement('option');
+        option.value = breed.id;
+        option.text = breed.name;
+        breedSelect.appendChild(option);
+      });
+    })
+    .catch(() => {
+      error.classList.add('show');
+    });
+
+  // Event listener for breed selection
+  breedSelect.addEventListener('change', () => {
+    const selectedBreedId = breedSelect.value;
+
+    // Hide cat info and show loader while fetching data
+    catInfo.style.display = 'none';
+    loader.style.display = 'block';
+
+    // Fetch cat information by breed
+    fetchCatByBreed(selectedBreedId)
+      .then(catData => {
+        // Display cat information
+        const [cat] = catData;
+        catInfo.innerHTML = `
+          <h2>${cat.breeds[0].name}</h2>
+          <p><strong>Description:</strong> ${cat.breeds[0].description}</p>
+          <p><strong>Temperament:</strong> ${cat.breeds[0].temperament}</p>
+          <img src="${cat.url}" alt="${cat.breeds[0].name}" />
+        `;
+        catInfo.style.display = 'block';
+        loader.style.display = 'none';
+      })
+      .catch(() => {
+        error.classList.add('show');
+        catInfo.style.display = 'none';
+        loader.style.display = 'none';
+      });
+  });
 });
-
-const loader = document.querySelector('.loader');
-const error = document.querySelector('.error');
-const catInfo = document.querySelector('.cat-info');
-const breedName = document.querySelector('breed-name');
-const description = document.querySelector('description');
-const temperament = document.querySelector('temperament');
-
-loader.computedStyleMap.display = 'none';
-error.computedStyleMap.display = 'none';
-catInfo.computedStyleMap.display = 'none';
-
-fetchBreeds()
-  .then(breeds => {
-    const breedOptions = breeds.map(breed => ({
-      text: breed.name,
-      value: breed.id,
-    }));
-    breedSelect.setData(breedOptions);
-    breedSelect.set('placeholder', 'Select a breed');
-    loader.computedStyleMap.display = 'none';
-  })
-  .catch(err => {
-    loader.style.display = 'none';
-    error.style.display = 'block';
-    console.error('Error fetching breeds:', err);
-  });
-breedSelect
-  .onchange(selectedBreed.value)
-  .then(cat => {
-    breedName.textContent = cat.breeds[0].name;
-    description.textContent = cat.breeds[0].description;
-    temperament.textContent = cat.breeds[0].temperament;
-    const catImage = document.createElement('img');
-    catImage.src = cat.url;
-    catImage.alt = 'Cat';
-    catImage.classList.add('cat-image');
-    const catImageContainer = document.querySelector('.cat-image');
-    catImageContainer.innerHTML = '';
-    catImageContainer.appendChild(catImage);
-    loader.style.display = 'none';
-    catInfo.style.display = 'block';
-  })
-  .catch(err => {
-    loader.style.display = 'none';
-    error.style.display = 'block';
-    console.error('Error fetching cat by breed:', err);
-  });

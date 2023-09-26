@@ -2,49 +2,66 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #f2f2f2;
+  text-align: center;
 }
 
 .container {
   max-width: 600px;
   margin: 0 auto;
-  text-align: center;
   padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
 }
 
-h1 {
-  font-size: 24px;
+/* Стили для select с использованием SlimSelect */
+.breed-select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
   margin-bottom: 20px;
 }
 
+/* Стили для загрузчика */
 .loader {
   display: none;
+  text-align: center;
+  font-size: 18px;
+  margin: 20px 0;
 }
 
+/* Стили для блока ошибки */
 .error {
   display: none;
+  text-align: center;
+  font-size: 18px;
+  margin: 20px 0;
   color: red;
 }
 
-.breed-select {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 10px;
-}
-
+/* Стили для информации о коте */
 .cat-info {
   display: none;
-  margin-top: 20px;
-  text-align: left;
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
 }
 
-.cat-image {
-  margin-top: 10px;
+.cat-info h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
 }
 
-.cat-details p {
+.cat-info p {
+  font-size: 18px;
   margin: 10px 0;
 }
 
-.cat-details strong {
-  font-weight: bold;
+.cat-info img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 20px;
 }

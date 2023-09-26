@@ -4,28 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Homework 10</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
     <div class="container">
-      <h1>Cat Information</h1>
-      <div class="loader">Loading...</div>
-      <p class="error">Error fetching data.</p>
-      <select id="breed-select" class="breed-select">
-        <!-- Breed options will be populated here -->
-      </select>
-      <div class="cat-info">
-        <h2>Cat Info</h2>
-        <div class="cat-image">
-          <!-- Cat image will be displayed here -->
-        </div>
-        <div class="cat-details">
-          <p><strong>Breed:</strong> <span id="breed-name"></span></p>
-          <p><strong>Description:</strong> <span id="description"></span></p>
-          <p><strong>Temperament:</strong> <span id="temperament"></span></p>
-        </div>
-      </div>
+      <select class="breed-select"></select>
+      <p class="loader">Loading data, please wait...</p>
+      <p class="error">Oops! Something went wrong! Try reloading the page!</p>
+      <div class="cat-info"></div>
     </div>
-    <script src="/js/index.js" type="module"></script>
+
+    <script src="./js/app.js" type="module"></script>
   </body>
 </html>

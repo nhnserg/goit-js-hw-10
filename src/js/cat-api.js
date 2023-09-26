@@ -5,18 +5,20 @@ axios.defaults.headers.common['x-api-key'] =
 
 export function fetchBreeds() {
   return axios
-    .get('https://api.thecatapi.com/vi/breeds')
-    .then(response => response.date)
+    .get('https://api.thecatapi.com/v1/breeds')
+    .then(response => response.data)
     .catch(error => {
+      console.error('Error fetching breeds:', error);
       throw error;
     });
+}
 
-  export function fetchCatByBreeds(breedId) {
-    return axios
-      .get(`https://api.thecatapi.com/v1/images/search?breed_ids=${breedId}`)
-      .then(response => response.data[0])
-      .catch(error => {
-        throw error;
-      });
-  }
+export function fetchCatByBreed(breedId) {
+  return axios
+    .get(`https://api.thecatapi.com/v1/images/search?breed_ids=${breedId}`)
+    .then(response => response.data)
+    .catch(error => {
+      console.error('Error fetching cat by breed:', error);
+      throw error;
+    });
 }
