@@ -6,32 +6,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const error = document.querySelector('.error');
   const catInfo = document.querySelector('.cat-info');
 
-  // Fetch and populate breed options
   fetchBreeds()
     .then(breeds => {
-      breeds.forEach(breed => {
+      const options = breeds.map(breed => {
         const option = document.createElement('option');
         option.value = breed.id;
         option.text = breed.name;
-        breedSelect.appendChild(option);
+        return option;
       });
+      breedSelect.append(...options);
     })
     .catch(() => {
       error.classList.add('show');
     });
 
-  // Event listener for breed selection
   breedSelect.addEventListener('change', () => {
     const selectedBreedId = breedSelect.value;
 
-    // Hide cat info and show loader while fetching data
     catInfo.style.display = 'none';
     loader.style.display = 'block';
 
-    // Fetch cat information by breed
     fetchCatByBreed(selectedBreedId)
       .then(catData => {
-        // Display cat information
         const [cat] = catData;
         catInfo.innerHTML = `
           <h2>${cat.breeds[0].name}</h2>
@@ -40,11 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="${cat.url}" alt="${cat.breeds[0].name}" />
         `;
         catInfo.style.display = 'block';
-        loader.style.display = 'none';
       })
       .catch(() => {
         error.classList.add('show');
         catInfo.style.display = 'none';
+      })
+      .finally(() => {
         loader.style.display = 'none';
       });
   });
