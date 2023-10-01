@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   populateBreedSelect();
 
-  // Add event listener for breed selection
+  
   breedSelect.addEventListener('change', () => {
     const selectedBreedId = breedSelect.value;
     updateCatInfo(selectedBreedId);
